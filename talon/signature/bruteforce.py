@@ -5,7 +5,8 @@ import logging
 import regex as re
 
 from talon.signature.constants import (SIGNATURE_MAX_LINES,
-                                       TOO_LONG_SIGNATURE_LINE)
+                                       TOO_LONG_SIGNATURE_LINE_FOR_BRUTE_FORCE)
+from talon.signature.learning.helpers import binary_regex_search, RE_URL
 from talon.utils import get_delimiter
 
 log = logging.getLogger(__name__)
@@ -165,7 +166,10 @@ def _mark_candidate_indexes(lines, candidate):
 
     # mark lines starting from bottom up
     for i, line_idx in reversed(list(enumerate(candidate))):
-        if len(lines[line_idx].strip()) > TOO_LONG_SIGNATURE_LINE:
+        if len(lines[line_idx].strip()) > TOO_LONG_SIGNATURE_LINE_FOR_BRUTE_FORCE:
+            # if the line has a url, it may be too long to satisfy max length limit
+            if binary_regex_search(RE_URL)(lines[line_idx]):
+                continue
             markers[i] = 'l'
         else:
             line = lines[line_idx].strip()
