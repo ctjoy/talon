@@ -34,6 +34,14 @@ EXTRACTOR_FILENAME = os.path.join(DATA_DIR, 'classifier')
 EXTRACTOR_DATA = os.path.join(DATA_DIR, 'train.data')
 
 
-def initialize():
-    extraction.EXTRACTOR = classifier.load(EXTRACTOR_FILENAME,
+def initialize(path_to_models=None):
+
+    if path_to_models:
+        extractor_filename = os.path.join(path_to_models, 'classifier')
+        extractor_data = os.path.join(path_to_models, 'train.data')
+
+        extraction.EXTRACTOR = classifier.load(extractor_filename,
+                                               extractor_data)
+    else:
+        extraction.EXTRACTOR = classifier.load(EXTRACTOR_FILENAME,
                                            EXTRACTOR_DATA)

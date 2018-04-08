@@ -7,7 +7,7 @@ except ImportError:
     ML_ENABLED = False
 
 
-def init():
+def init(path_to_models=None):
     register_xpath_extensions()
     if ML_ENABLED:
-        signature.initialize()
+        signature.initialize(path_to_models)
