@@ -92,10 +92,18 @@ def _mark_lines(lines, sender):
         j = len(lines) - len(candidate) + i
         if not line.strip():
             markers[j] = 'e'
-        elif is_signature_line(line, sender, EXTRACTOR):
+        elif is_signature_line(line, sender, EXTRACTOR) or _is_whitelist_signature(line):
             markers[j] = 's'
 
     return "".join(markers)
+
+
+def _is_whitelist_signature(line):
+    # Facebook
+    # Instagram
+    # LinkedIn
+    # Twitter
+    return line.lower().strip() in ['facebook', 'instagram', 'linkedin', 'twitter']
 
 
 def _process_marked_lines(lines, markers):
@@ -110,4 +118,3 @@ def _process_marked_lines(lines, markers):
         return (lines[:-signature.end()], lines[-signature.end():])
 
     return (lines, None)
-
