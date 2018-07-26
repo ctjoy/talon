@@ -103,7 +103,9 @@ def cut_microsoft_quote(html_message):
         #windows mail
         "//div[@style='padding-top: 5px; "
         "border-top-color: rgb(229, 229, 229); "
-        "border-top-width: 1px; border-top-style: solid;']"
+        "border-top-width: 1px; border-top-style: solid;']|"
+        # Microsoft Word 15
+        "//div[@style='border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0in 0in 0in']"
     )
 
     if splitter:
