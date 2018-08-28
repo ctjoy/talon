@@ -103,7 +103,7 @@ def _is_whitelist_signature(line):
     # Instagram
     # LinkedIn
     # Twitter
-    return line.lower().strip() in ['facebook', 'instagram', 'linkedin', 'twitter']
+    return line.lower().strip() in ['facebook', 'instagram', 'linkedin', 'twitter', 'google+', 'blog']
 
 
 def _process_marked_lines(lines, markers):

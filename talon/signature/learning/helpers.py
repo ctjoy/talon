@@ -206,7 +206,6 @@ def many_capitalized_words(s):
     """
     return 1 if capitalized_words_percent(s) > 66 else 0
 
-
 def has_signature(body, sender):
     '''Checks if the body has signature. Returns True or False.'''
     non_empty = [line for line in body.splitlines() if line.strip()]
@@ -219,9 +218,16 @@ def has_signature(body, sender):
             continue
         elif contains_sender_names(sender)(line):
             return True
-        elif (binary_regex_search(RE_RELAX_PHONE)(line) +
+        elif (_is_whitelist_signature(line) + binary_regex_search(RE_RELAX_PHONE)(line) +
               binary_regex_search(RE_EMAIL)(line) +
               binary_regex_search(RE_URL)(line) == 1):
             upvotes += 1
     if upvotes > 1:
         return True
+
+def _is_whitelist_signature(line):
+    # Facebook
+    # Instagram
+    # LinkedIn
+    # Twitter
+    return line.lower().strip() in ['facebook', 'instagram', 'linkedin', 'twitter','google+','blog']
