@@ -92,7 +92,7 @@ def _mark_lines(lines, sender):
         j = len(lines) - len(candidate) + i
         if not line.strip():
             markers[j] = 'e'
-        elif is_signature_line(line, sender, EXTRACTOR) or _is_whitelist_signature(line):
+        elif (is_signature_line(line, sender, EXTRACTOR) or _is_whitelist_signature(line)) and not _is_blacklist_signature(line):
             markers[j] = 's'
 
     return "".join(markers)
@@ -105,6 +105,10 @@ def _is_whitelist_signature(line):
     # Twitter
     return line.lower().strip() in ['facebook', 'instagram', 'linkedin', 'twitter', 'google+', 'blog']
 
+
+def _is_blacklist_signature(line):
+    black_list =['vacation']
+    return any(x in line.lower().strip() for x in black_list)
 
 def _process_marked_lines(lines, markers):
     """Run regexes against message's marked lines to strip signature.
